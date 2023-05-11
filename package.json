@@ -1,0 +1,109 @@
+{
+  "name": "@pixi-wallet/wallet",
+  "version": "0.0.1",
+  "description": "wallet builder",
+  "files": [
+    "/dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./*.js": {
+      "import": "./dist/esm/*.js",
+      "require": "./dist/cjs/*.js",
+      "types": "./dist/types/*.d.ts"
+    },
+    "./*": {
+      "import": "./dist/esm/*.js",
+      "require": "./dist/cjs/*.js",
+      "types": "./dist/types/*.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "index.d.ts": [
+        "dist/types/index.d.ts"
+      ],
+      "*": [
+        "dist/types/*"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "npm run dist",
+    "dist": "npm run dist:prep && npm run dist:src && npm run dist:cjs && npm run dist:esm && npm run dist:types ",
+    "dist:cjs": "tsc --project ./dist/ --module commonjs --outDir ./dist/cjs/ --sourceMap",
+    "dist:esm": "tsc --project ./dist/ --module es2020 --outDir ./dist/esm/ --sourceMap",
+    "dist:types": "tsc --project ./dist/ --emitDeclarationOnly --declaration --declarationDir ./dist/types/",
+    "dist:prep": "copyfiles --error tsconfig.json ./dist/",
+    "dist:src": "copyfiles --error --up 1 \"./src/**/*\" ./dist/src/"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/.history/"
+    ],
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    },
+    "preset": "ts-jest/presets/default-esm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkabanau/ucan-plugin.git"
+  },
+  "keywords": [
+    "ci",
+    "cd",
+    "ts",
+    "registry"
+  ],
+  "author": "maksim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pixi-wallet/wallet/issues"
+  },
+  "homepage": "https://github.com/pixi-wallet/wallet#readme",
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "copyfiles": "^2.4.1",
+    "fake-indexeddb": "^4.0.1",
+    "jest": "^28.1.3",
+    "ts-jest": "^28.0.8",
+    "typescript": "^4.8.2",
+    "@types/node": "^18.15.11"
+  },
+  "publishConfig": {
+    "@mkabanau:registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@pixi-wallet/components": "^0.0.1",
+    "@mkabanau/core": "^0.11.4-test4",
+    "@mkabanau/default-plugins": "^0.11.4-test2",
+    "@pixi-wallet/ucan-plugin": "^0.0.1",
+    "@mkabanau/ucans": "^0.11.4-test2",
+    "@pixi-wallet/yjs-storage": "^0.0.1",
+    "@peculiar/webcrypto": "1.1.4",
+    "@transmute/jose-ld": "^0.7.0-unstable.80",
+    "@transmute/x25519-key-pair": "^0.7.0-unstable.80",
+    "factory.ts": "^1.4.0",
+    "localstorage-polyfill": "^1.0.1"
+  }
+}
